@@ -1,0 +1,15 @@
+.idea
+cmake-build-debug
+/algo/build/
+*.pdf
+*.eps
+*.tsv
+*.csv
+*.pt
+*.pth
+*.pkl
+*.html
+*.npy
+torch/
+caffe2/
+runs/
