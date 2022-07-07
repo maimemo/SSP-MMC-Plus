@@ -9,6 +9,7 @@ import pandas as pd
 from pathlib import Path
 from sklearn.utils import shuffle
 from torch.utils.tensorboard import SummaryWriter
+from tqdm import tqdm
 
 
 def l1_loss(forecast, actual):
@@ -198,7 +199,7 @@ class SpacedRepetitionModel(object):
             ae = 0
             ape = 0
             count = 0
-            for index in self.test_set.index:
+            for index in tqdm(self.test_set.index):
                 sample = self.test_set.loc[index]
                 halflife, line, halflife_tensor, line_tensor, weight = self.sample2tensor(sample)
                 output = self.net(line_tensor, None)

@@ -20,6 +20,36 @@ camera = dict(
 )
 
 
+def raw_data_visualize():
+    raw = pd.read_csv('./data/opensource_dataset_p_history.tsv', sep='\t')
+    raw.dropna(inplace=True)
+    raw = raw[raw['group_cnt'] > 1000]
+    raw['label'] = raw['r_history'] + '/' + raw['t_history']
+
+    fig = px.scatter_3d(raw, x='last_p_recall', y='last_halflife',
+                        z='halflife', color='d',
+                        hover_name='label')
+    h_array = np.arange(0.5, 1600, 5)  # 03
+    p_array = np.arange(0.3, 0.97, 0.05)  # 03
+    h_array, p_array = np.meshgrid(h_array, p_array)
+    fig.add_surface(y=h_array, x=p_array, z=h_array, showscale=False)
+    fig.update_traces(opacity=0.2, selector=dict(type='surface'))
+    fig.layout.scene.yaxis.type = 'log'
+    fig.layout.scene.zaxis.type = 'log'
+    fig.update_traces(marker_size=2, selector=dict(type='scatter3d'))
+    fig.update_scenes(xaxis_autorange="reversed")
+    fig.update_layout(
+        scene_camera=camera,
+        scene=dict(
+            xaxis=dict(title_font=dict(size=24), tickfont=dict(size=16)),
+            yaxis=dict(title_font=dict(size=24), tickfont=dict(size=16)),
+            zaxis=dict(title_font=dict(size=24), tickfont=dict(size=16)), ))
+    fig.update_layout(margin_b=50, margin_t=50, margin_l=0, margin_r=50, margin_pad=100)
+    fig.update_coloraxes(colorbar_tickfont_size=24)
+    fig.write_image(f"plot/DHP_model_raw.pdf", width=1000, height=1000)
+    fig.show()
+
+
 def dhp_model_visualize():
     model = DHP_HLR()
     h_array = np.arange(0.5, 750.5, 1)  # 03
@@ -379,7 +409,8 @@ def gru_model_visualize():
 
 
 if __name__ == "__main__":
+    raw_data_visualize()
     # dhp_model_visualize()
     # gru_model_visualize()
     # dhp_policy_action_visualize()
-    gru_policy_action_visualize()
+    # gru_policy_action_visualize()

@@ -17,7 +17,7 @@ def load_data(input_file):
     dataset = dataset[dataset['halflife'] > 0]
     dataset = dataset[dataset['i'] > 0]
     dataset = dataset[
-        dataset['p_history'].map(lambda x: len(x.split(','))) == dataset['t_history'].map(lambda x: len(x.split(',')))]
+        dataset['p_history'].map(lambda x: len(str(x).split(','))) == dataset['t_history'].map(lambda x: len(x.split(',')))]
     # dataset.drop_duplicates(subset=['r_history', 't_history', 'p_history', 'difficulty'], inplace=True)
     # dataset['weight'] = dataset['total_cnt'] / dataset['total_cnt'].sum()
     # dataset['weight'] = dataset['total_cnt'] / dataset['total_cnt'].sum()
