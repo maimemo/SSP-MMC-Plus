@@ -54,5 +54,7 @@ if __name__ == "__main__":
                 data['t_history'] == item['t_history'] + f',{interval}') & (
                              data['d'] == item['d'])].index
         data.loc[index, 'p_history'] = item['p_history'] + ',' + str(item['p_recall'])
+        data.loc[index, 'last_halflife'] = item['halflife']
+        data.loc[index, 'last_p_recall'] = item['p_recall']
 
     data.to_csv('./data/opensource_dataset_p_history.tsv', sep='\t', index=None)

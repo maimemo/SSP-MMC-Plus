@@ -21,15 +21,6 @@ class SpacedRepetitionModel(object):
 
     def train(self):
         tmp = self.train_set.copy()
-        for idx in tqdm(tmp.index):
-            item = tmp.loc[idx]
-            t = int(item['delta_t'])
-            index = tmp[(tmp['i'] == item['i'] + 1) &
-                        (tmp['d'] == item['d']) &
-                        (tmp['r_history'].str.startswith(item['r_history'])) &
-                        (tmp['t_history'] == item['t_history'] + f',{t}')].index
-            tmp.loc[index, 'last_halflife'] = item['halflife']
-            tmp.loc[index, 'last_p_recall'] = item['p_recall']
         tmp['halflife_increase'] = round(tmp['halflife'] / tmp['last_halflife'], 4)
         tmp = tmp[tmp['i'] > 2]
         tmp['last_recall'] = tmp['r_history'].map(lambda x: x[-1])
@@ -126,7 +117,7 @@ class SpacedRepetitionModel(object):
         p_loss = 0
         h_loss = 0
         count = 0
-        for idx, line in tqdm(self.test_set.iterrows()):
+        for idx, line in tqdm(self.test_set.iterrows(), total=self.test_set.shape[0]):
             line_tensor = lineToTensor(list(
                 zip([line['r_history']], [line['t_history']], [line['p_history']]))[0])
             ph = 0
