@@ -30,16 +30,16 @@ def cal_halflife(group):
 
 
 if __name__ == "__main__":
-    # data = pd.read_csv('./data/opensource_dataset_forgetting_curve.tsv', sep='\t', index_col=None)
-    # data = data[(data['p_recall'] < 1) & (data['p_recall'] > 0)]
-    # data = data.groupby(
-    #     by=['d', 'i', 'r_history', 't_history']).apply(
-    #     cal_halflife)
-    #
-    # data['p_recall'] = data['p_recall'].map(lambda x: round(x, 2))
-    # data['p_history'] = '0'
-    # data.sort_values('i', inplace=True)
-    # data.to_csv('./data/opensource_dataset_halflife.tsv', sep='\t', index=None)
+    data = pd.read_csv('./data/opensource_dataset_forgetting_curve.tsv', sep='\t', index_col=None)
+    data = data[(data['p_recall'] < 1) & (data['p_recall'] > 0)]
+    data = data.groupby(
+        by=['d', 'i', 'r_history', 't_history']).apply(
+        cal_halflife)
+
+    data['p_recall'] = data['p_recall'].map(lambda x: round(x, 2))
+    data['p_history'] = '0'
+    data.sort_values('i', inplace=True)
+    data.to_csv('./data/opensource_dataset_halflife.tsv', sep='\t', index=None)
     data = pd.read_csv('./data/opensource_dataset_halflife.tsv', sep='\t', index_col=None)
 
     for idx in tqdm(data[(data['i'] == 2)].index):
