@@ -29,6 +29,9 @@ def raw_data_visualize():
     fig = px.scatter_3d(raw, x='last_p_recall', y='last_halflife',
                         z='halflife', color='d',
                         hover_name='label')
+    fig.layout.scene.xaxis.title = r"p<sub>i-1</sub>"
+    fig.layout.scene.yaxis.title = r"h<sub>i-1</sub>"
+    fig.layout.scene.zaxis.title = r"h<sub>i</sub>"
     h_array = np.arange(0.5, 1600, 5)  # 03
     p_array = np.arange(0.3, 0.97, 0.05)  # 03
     h_array, p_array = np.meshgrid(h_array, p_array)
@@ -63,10 +66,9 @@ def dhp_model_visualize():
         for diff in
         range(1, 11)]
     fig = go.Figure(data=surface)
-    fig.update_layout(scene=dict(
-        xaxis_title='last_halflife',
-        yaxis_title='last_p_recall',
-        zaxis_title='halflife'))
+    fig.layout.scene.xaxis.title = r"h<sub>i-1</sub>"
+    fig.layout.scene.yaxis.title = r"p<sub>i-1</sub>"
+    fig.layout.scene.zaxis.title = r"h<sub>i</sub>"
     fig.update_layout(
         scene_camera=camera,
         scene=dict(
@@ -85,10 +87,9 @@ def dhp_model_visualize():
                    ) for diff in
         range(1, 11)]
     fig = go.Figure(data=surface)
-    fig.update_layout(scene=dict(
-        xaxis_title='last_halflife',
-        yaxis_title='last_p_recall',
-        zaxis_title='halflife/last_halflife'))
+    fig.layout.scene.xaxis.title = r"h<sub>i-1</sub>"
+    fig.layout.scene.yaxis.title = r"p<sub>i-1</sub>"
+    fig.layout.scene.zaxis.title = r"h<sub>i</sub>/h<sub>i-1</sub>"
     # fig.write_html(f"./plot/DHP_recall_inc_model.html")
     fig.update_layout(
         scene_camera=camera,
@@ -123,10 +124,9 @@ def dhp_model_visualize():
                    ) for diff in
         range(1, 11)]
     fig = go.Figure(data=surface)
-    fig.update_layout(scene=dict(
-        xaxis_title='last_halflife',
-        yaxis_title='last_p_recall',
-        zaxis_title='halflife'))
+    fig.layout.scene.xaxis.title = r"h<sub>i-1</sub>"
+    fig.layout.scene.yaxis.title = r"p<sub>i-1</sub>"
+    fig.layout.scene.zaxis.title = r"h<sub>i</sub>"
     fig.update_layout(
         scene_camera=camera,
         scene=dict(
@@ -351,6 +351,9 @@ def gru_model_visualize():
     # exit()
 
     fig = px.scatter_3d(recall_model, x='last_halflife', y='last_p_recall', z='halflife', color='halflife')
+    fig.layout.scene.xaxis.title = r"h<sub>i-1</sub>"
+    fig.layout.scene.yaxis.title = r"p<sub>i-1</sub>"
+    fig.layout.scene.zaxis.title = r"h<sub>i</sub>"
     fig.update_traces(marker_size=2, selector=dict(type='scatter3d'))
     fig.update_layout(
         scene_camera=camera,
@@ -366,6 +369,9 @@ def gru_model_visualize():
 
     fig = px.scatter_3d(recall_model, x='last_halflife', y='last_p_recall', z='halflife_increase',
                         color='halflife_increase_log')
+    fig.layout.scene.xaxis.title = r"h<sub>i-1</sub>"
+    fig.layout.scene.yaxis.title = r"p<sub>i-1</sub>"
+    fig.layout.scene.zaxis.title = r"h<sub>i</sub>/h<sub>i-1</sub>"
     fig.update_traces(marker_size=2, selector=dict(type='scatter3d'))
     fig.update_coloraxes(colorbar_tickmode='array', colorbar_tickvals=[i for i in np.arange(0, 3.5, 0.5)],
                          colorbar_ticktext=[round(np.exp(i), 1) for i in np.arange(0, 3.5, 0.5)])
@@ -394,6 +400,9 @@ def gru_model_visualize():
     forget_model.drop_duplicates(inplace=True)
 
     fig = px.scatter_3d(forget_model, x='last_halflife', y='last_p_recall', z='halflife', color='halflife')
+    fig.layout.scene.xaxis.title = r"h<sub>i-1</sub>"
+    fig.layout.scene.yaxis.title = r"p<sub>i-1</sub>"
+    fig.layout.scene.zaxis.title = r"h<sub>i</sub>"
     fig.update_traces(marker_size=2, selector=dict(type='scatter3d'))
     fig.update_layout(
         scene_camera=camera,
@@ -409,8 +418,8 @@ def gru_model_visualize():
 
 
 if __name__ == "__main__":
-    raw_data_visualize()
+    # raw_data_visualize()
     # dhp_model_visualize()
-    # gru_model_visualize()
+    gru_model_visualize()
     # dhp_policy_action_visualize()
     # gru_policy_action_visualize()
