@@ -20,6 +20,69 @@ camera = dict(
 )
 
 
+def difficulty_visualize():
+    raw = pd.read_csv('./data/opensource_dataset_difficulty.tsv', sep='\t')
+    u = raw['p_recall'].mean()
+    std = raw['p_recall'].std()
+    print(u, std)
+    fig = px.histogram(raw, x="p_recall", nbins=20)
+    fig.update_xaxes(title_text='probability of P(recall)', title_font=dict(size=26), tickfont=dict(size=22),
+                     range=[0.15, 1])
+    fig.update_yaxes(title_font=dict(size=26), tickfont=dict(size=22))
+    fig.update_layout(bargap=0.2, margin_t=10, margin_r=10, margin_b=10)
+    # fig.show()
+    fig.write_image("plot/distribution_p.pdf", width=600, height=360)
+    time.sleep(3)
+    fig.write_image("plot/distribution_p.pdf", width=600, height=360)
+    fig = px.histogram(raw, x="d", text_auto=True)
+    fig.update_xaxes(title_text='difficulty', title_font=dict(size=26), tickfont=dict(size=22))
+    fig.update_yaxes(title_font=dict(size=26), tickfont=dict(size=22))
+    fig.update_layout(bargap=0.2, margin_t=10, margin_r=10, margin_b=10)
+    # fig.show()
+    fig.write_image("plot/distribution_d.pdf", width=600, height=360)
+    time.sleep(3)
+    fig.write_image("plot/distribution_d.pdf", width=600, height=360)
+
+
+def forgetting_curve_visualize():
+    raw = pd.read_csv('./data/opensource_dataset_p_history.tsv', sep='\t')
+    filters = [(4, '0,1', '0,1'), (4, '0,1,1', '0,1,3'), (4, '0,1,1', '0,1,4'), (4, '0,1,1', '0,1,5')]
+    fig = go.Figure()
+    color = ['blue', 'red', 'green', 'orange']
+    for i, f in enumerate(filters):
+        d = f[0]
+        r_history = f[1]
+        t_history = f[2]
+        tmp = raw[(raw['d'] == d) & (raw['r_history'] == r_history) & (raw['t_history'] == t_history)].copy()
+        tmp.sort_values(by=['delta_t'], inplace=True)
+        tmp['size'] = np.log(tmp['total_cnt'])
+        halflife = tmp['halflife'].values[0]
+        tmp['fit_p_recall'] = np.power(2, -tmp['delta_t'] / halflife)
+        fig.add_trace(
+            go.Scatter(x=tmp['delta_t'], y=tmp['fit_p_recall'], mode='lines', name=f'halflife={halflife:.2f}'))
+        fig.add_trace(go.Scatter(x=tmp['delta_t'], y=tmp['p_recall'],
+                                 mode='markers', marker_size=tmp['size'],
+                                 name=r'$d=%d|\boldsymbol r_{1:i-1}=%s|\boldsymbol{\Delta t}_{1:i-1}=%s$' % (
+                                     d, r_history, t_history)))
+        fig.update_traces(marker_color=color[i], selector=dict(name=f'halflife={halflife:.2f}'))
+        fig.update_traces(marker_color=color[i],
+                          selector=dict(name=r'$d=%d|\boldsymbol r_{1:i-1}=%s|\boldsymbol{\Delta t}_{1:i-1}=%s$' % (
+                              d, r_history, t_history)))
+    fig.update_layout(legend=dict(
+        yanchor="bottom",
+        y=0.01,
+        xanchor="right",
+        x=0.99
+    ))
+    fig.update_xaxes(title_text='delta_t', title_font=dict(size=18), tickfont=dict(size=14))
+    fig.update_yaxes(title_text='p_recall', title_font=dict(size=18), tickfont=dict(size=14))
+    fig.update_layout(margin_t=10, margin_r=10, margin_b=10)
+    # fig.show()
+    fig.write_image(f"plot/forgetting_curve.pdf", width=600, height=360)
+    time.sleep(3)
+    fig.write_image(f"plot/forgetting_curve.pdf", width=600, height=360)
+
+
 def raw_data_visualize():
     raw = pd.read_csv('./data/opensource_dataset_p_history.tsv', sep='\t')
     raw.dropna(inplace=True)
@@ -418,8 +481,10 @@ def gru_model_visualize():
 
 
 if __name__ == "__main__":
-    # raw_data_visualize()
-    # dhp_model_visualize()
+    difficulty_visualize()
+    forgetting_curve_visualize()
+    raw_data_visualize()
+    dhp_model_visualize()
     gru_model_visualize()
-    # dhp_policy_action_visualize()
-    # gru_policy_action_visualize()
+    dhp_policy_action_visualize()
+    gru_policy_action_visualize()

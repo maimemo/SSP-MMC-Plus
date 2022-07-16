@@ -9,10 +9,8 @@ from envrioment import GRU_HLR, DHP_HLR
 plt.style.use('seaborn-whitegrid')
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 plt.rcParams['figure.figsize'] = (8.0, 6.0)
-plt.rcParams.update({'font.size': 14})
+plt.rcParams.update({'font.size': 24})
 plt.rc('text', usetex=True)
-plt.rc('font', family='serif')
-
 target_halflife = 360
 
 period_len = 14  # 滚动平均区间
@@ -290,7 +288,7 @@ if __name__ == "__main__":
         plt.figure(3)
         plt.title(f"day cost limit:{day_cost_limit}-learn days:{learn_days}")
         plt.xlabel("days")
-        plt.ylabel(f"new item per day({period_len} days average)")
+        plt.ylabel(f"new word per day({period_len} days average)")
         plt.grid(True)
         plt.savefig(f'./plot/{model}_NEW.eps', bbox_inches='tight')
         plt.figure(4)
@@ -303,7 +301,7 @@ if __name__ == "__main__":
         plt.figure(5)
         # plt.title(f"day cost limit:{day_cost_limit}-learn days:{learn_days}")
         plt.xlabel("days")
-        plt.ylabel(f"items total learned")
+        plt.ylabel(f"words total learned")
         # plt.legend()
         plt.grid(True)
         # plt.show()
