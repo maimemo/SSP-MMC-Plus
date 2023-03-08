@@ -34,7 +34,7 @@ if __name__ == "__main__":
             student = DHP_HLR()
         q_list = []
         for d in range(1, 11):
-            left = 1
+            left = 0.5
             right = 7
             left_cost = np.asarray([calc_q_cost(left, d) for _ in range(sample_size)]).mean()
             right_cost = np.asarray([calc_q_cost(right, d) for _ in range(sample_size)]).mean()

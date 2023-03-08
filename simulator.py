@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import random
 from model.MEMORIZE import *
 from envrioment import GRU_HLR, DHP_HLR
+import os
+os.environ["PATH"] += os.pathsep + '/usr/local/bin'
+os.environ["PATH"] += os.pathsep + '/opt/homebrew/bin'
 
 plt.style.use('seaborn-whitegrid')
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
@@ -69,7 +72,8 @@ def scheduler(item: pd.DataFrame, method):
     lapses = item['lapses']
     interval = 1
     if method == 'MEMORIZE':
-        interval = sampler(1 / halflife, 1, learn_days * 100)
+        q = 1.38 if model == 'GRU' else 2.56
+        interval = sample_memorize(1 / halflife, q)
     elif method == 'HALF-LIFE':
         interval = halflife
     elif method == 'SSP-MMC':
@@ -108,6 +112,7 @@ if __name__ == "__main__":
             student = DHP_HLR()
             interval_policy = np.load('./SSP-MMC/dhp_policy.npy')
         for method in ['SSP-MMC', 'THRESHOLD', 'ANKI', 'HALF-LIFE', 'MEMORIZE', 'RANDOM']:
+        # for method in ['MEMORIZE']:
             random.seed(2022)
             print("method:", method)
 

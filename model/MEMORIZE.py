@@ -17,3 +17,12 @@ def sampler(n_t, q, T):
         proposed_int = intensity(t, n_t, q)
         if np.random.uniform(0, 1, 1)[0] < proposed_int / max_int:
             return t
+
+
+# the following code is from https://github.com/Networks-Learning/tpprl
+def sample_memorize(forgetting_rate, q_max):
+    dt = 0
+    while True:
+        dt += np.random.exponential(scale=1.0 / q_max)
+        if np.random.uniform() < 1 - np.exp(-forgetting_rate * dt):
+            return dt
