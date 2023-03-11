@@ -12,8 +12,8 @@ models = ('nn-GRU_nh-2_loss-sMAPE', 'nn-GRU_nh-2_loss-sMAPE-p',
           'nn-GRU_nh-2_loss-sMAPE-t', 'nn-GRU_nh-2_loss-sMAPE-p-t', 'DHP', 'HLR', 'HLR-lex', 'pimsleur', 'leitner')
 plt.style.use('seaborn-whitegrid')
 plt.rcParams["axes.edgecolor"] = "black"
-plt.rcParams['figure.figsize'] = (8.0, 12.0)
-plt.rcParams.update({'font.size': 16})
+plt.rcParams['figure.figsize'] = (8.0, 16.0)
+plt.rcParams.update({'font.size': 24})
 
 
 def load_brier(predictions, real, bins=20):
@@ -69,14 +69,14 @@ if __name__ == "__main__":
     data = pd.read_csv('./data/dataset_trans.csv')
     Path('./plot').mkdir(parents=True, exist_ok=True)
     plt.hist(data['p'], range=(0, 1), width=(1 / 20), bins=20, color='white', edgecolor='black')
-    plt.ylabel("Number of samples", fontsize=16)
-    plt.xlabel("P(recall)", fontsize=16)
+    plt.ylabel("Number of samples", fontsize=24)
+    plt.xlabel("P(recall)", fontsize=24)
     plt.savefig(f'./plot/p_distribution.eps')
     plt.close()
 
     plt.hist(data['h'], width=(data['h'].max() / 20), bins=20, color='white', edgecolor='black', log=True)
-    plt.ylabel("Number of samples", fontsize=16)
-    plt.xlabel("half-life (days)", fontsize=16)
+    plt.ylabel("Number of samples", fontsize=24)
+    plt.xlabel("half-life (days)", fontsize=24)
     plt.savefig(f'./plot/h_distribution.eps')
     plt.close()
 
@@ -154,7 +154,7 @@ if __name__ == "__main__":
     plt.gca().yaxis.set_major_formatter(ticker.FuncFormatter(to_percent))
     # plt.show()
     start, end = plt.gca().get_xlim()
-    plt.gca().xaxis.set_ticks(np.round(np.power(2, np.arange(np.log2(start), np.log2(end), 1))))
+    plt.gca().xaxis.set_ticks(np.round(np.power(4, np.arange(np.log(start)/np.log(4), np.log(end)/np.log(4), 1))))
     plt.gca().xaxis.set_major_formatter(ticker.FormatStrFormatter('%d'))
     plt.savefig(f'./plot/smape-distribution.eps', bbox_inches='tight')
 

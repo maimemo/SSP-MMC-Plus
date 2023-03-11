@@ -13,3 +13,7 @@ cmake-build-debug
 torch/
 caffe2/
 runs/
+.DS_Store
+.vscode/*
+build
+*.pyc
