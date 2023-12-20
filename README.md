@@ -18,9 +18,9 @@ When using this dataset and/or code, please cite this publication. A BibTeX reco
   journal={IEEE Transactions on Knowledge and Data Engineering}, 
   title={Optimizing Spaced Repetition Schedule by Capturing the Dynamics of Memory}, 
   year={2023},
-  volume={},
-  number={},
-  pages={1-13},
+  volume={35},
+  number={10},
+  pages={10085-10097},
   doi={10.1109/TKDE.2023.3251721}}
 ```
 
