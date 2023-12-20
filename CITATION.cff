@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Su"
+    given-names: "Jingyong"
+    orcid: "https://orcid.org/0000-0003-3216-7027"
+  - family-names: "Ye"
+    given-names: "Junyao"
+    orcid: "https://orcid.org/0000-0001-7475-0718"
+  - family-names: "Nie"
+    given-names: "Liqiang"
+    orcid: "https://orcid.org/0000-0003-1476-0273"
+  - family-names: "Cao"
+    given-names: "Yilong"
+    orcid: "https://orcid.org/0009-0006-5605-0092"
+  - family-names: "Chen"
+    given-names: "Yongyong"
+    orcid: "https://orcid.org/0000-0003-1970-1993"
+title: "SSP-MMC-Plus"
+version: 1.0.0
+url: "https://github.com/maimemo/SSP-MMC-Plus"
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Su"
+    given-names: "Jingyong"
+    orcid: "https://orcid.org/0000-0003-3216-7027"
+  - family-names: "Ye"
+    given-names: "Junyao"
+    orcid: "https://orcid.org/0000-0001-7475-0718"
+  - family-names: "Nie"
+    given-names: "Liqiang"
+    orcid: "https://orcid.org/0000-0003-1476-0273"
+  - family-names: "Cao"
+    given-names: "Yilong"
+    orcid: "https://orcid.org/0009-0006-5605-0092"
+  - family-names: "Chen"
+    given-names: "Yongyong"
+    orcid: "https://orcid.org/0000-0003-1970-1993"
+  doi: "10.1109/TKDE.2023.3251721"
+  journal: "IEEE Transactions on Knowledge and Data Engineering"
+  start: 10085 # First page number
+  end: 10097 # Last page number
+  title: "Optimizing Spaced Repetition Schedule by Capturing the Dynamics of Memory"
+  issue: 10
+  volume: 35
+  year: 2023
