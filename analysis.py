@@ -66,20 +66,6 @@ def to_percent(temp, position):
 
 
 if __name__ == "__main__":
-    data = pd.read_csv('./data/dataset_trans.csv')
-    Path('./plot').mkdir(parents=True, exist_ok=True)
-    plt.hist(data['p'], range=(0, 1), width=(1 / 20), bins=20, color='white', edgecolor='black')
-    plt.ylabel("Number of samples", fontsize=24)
-    plt.xlabel("P(recall)", fontsize=24)
-    plt.savefig(f'./plot/p_distribution.eps')
-    plt.close()
-
-    plt.hist(data['h'], width=(data['h'].max() / 20), bins=20, color='white', edgecolor='black', log=True)
-    plt.ylabel("Number of samples", fontsize=24)
-    plt.xlabel("half-life (days)", fontsize=24)
-    plt.savefig(f'./plot/h_distribution.eps')
-    plt.close()
-
     fig = plt.figure(1)
     ax1 = fig.add_subplot(111)
     ax2 = ax1.twinx()
